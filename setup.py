@@ -17,4 +17,9 @@ setup(
     ],
     test_suite="nosecolor",
     packages=find_packages(exclude=['tests', 'examples']),
+    entry_points={
+        "nose.plugins.0.10":[
+            "nosecolor=nosecolor:NoseColorPlugin",
+        ],
+    },
 )
