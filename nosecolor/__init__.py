@@ -1,5 +1,6 @@
 from nose.plugins.base import Plugin
 from termcolor import colored
+import traceback
 
 class NoseColorPlugin(Plugin):
     name = "nosecolor"
@@ -24,18 +25,33 @@ class NoseColorPlugin(Plugin):
                 pass
             def writeln(self, *arg):
                 pass
+            def flush(self):
+                pass
         return dummy()
 
-    def finalize(self, result):
-        self.stream.write("Ran %d test " % (result.testsRun,))
-        if result.wasSuccessful():
-            self.stream.writeln("[" + colored("SUCCESS", "green") + "]")
-        else:
-            self.stream.writeln("[" + colored("FAILED", "red") + "]")
-            self.stream.writeln('failures=%d errors=%d' % (len(result.failures), len(result.errors)))
-        for test, e in result.errors:
-            print test
 
-        for test, e in result.failures:
-            print test
+    def addError(self, test, error):
+        self.stream.writeln("=" * 80)
+        self.stream.writeln(colored(test, "red"))
+        self.stream.writeln("".join(traceback.format_exception(*error)))
+        self.stream.writeln("=" * 80)
+        
+    def addFailure(self, test, error):
+        self.stream.writeln("=" * 80)
+        self.stream.writeln(colored(test, "red"))
+        self.stream.writeln("".join(traceback.format_exception(*error)))
+        self.stream.writeln("=" * 80)
+
+    def finalize(self, result):
+        if result.errors or result.failures:
+            color = "red"
+        else:
+            color = "green"
+
+        self.stream.write(colored("Ran %d test " % (result.testsRun,), color))
+        if result.errors:
+            self.stream.write(colored("%d errors " % len(result.errors), color))
+        if result.failures:
+            self.stream.write(colored("%d failures " % len(result.failures), color))
+        self.stream.writeln("")
 
