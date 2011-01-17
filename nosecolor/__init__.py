@@ -17,6 +17,7 @@ class NoseColorPlugin(Plugin):
             return
         self.enabled = options.color
         self.conf = conf
+        self.verbosity = options.verbosity
 
     def setOutputStream(self, stream):
         self.stream = stream
@@ -29,18 +30,19 @@ class NoseColorPlugin(Plugin):
                 pass
         return dummy()
 
+    def addSuccess(self, test):
+        self.stream.writeln(colored(test, "green"))
 
     def addError(self, test, error):
-        self.stream.writeln("=" * 80)
         self.stream.writeln(colored(test, "red"))
         self.stream.writeln("".join(traceback.format_exception(*error)))
         self.stream.writeln("=" * 80)
         
     def addFailure(self, test, error):
-        self.stream.writeln("=" * 80)
         self.stream.writeln(colored(test, "red"))
-        self.stream.writeln("".join(traceback.format_exception(*error)))
-        self.stream.writeln("=" * 80)
+        if self.verbosity:
+            self.stream.writeln("".join(traceback.format_exception(*error)))
+            self.stream.writeln("=" * 80)
 
     def finalize(self, result):
         if result.errors or result.failures:
@@ -49,9 +51,7 @@ class NoseColorPlugin(Plugin):
             color = "green"
 
         self.stream.write(colored("Ran %d test " % (result.testsRun,), color))
-        if result.errors:
-            self.stream.write(colored("%d errors " % len(result.errors), color))
-        if result.failures:
-            self.stream.write(colored("%d failures " % len(result.failures), color))
+        self.stream.write(colored("%d errors " % len(result.errors), color))
+        self.stream.write(colored("%d failures " % len(result.failures), color))
         self.stream.writeln("")
 
