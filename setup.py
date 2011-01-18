@@ -4,16 +4,17 @@ import os
 here = os.path.dirname(__file__)
 
 readme = open(os.path.join(here, 'README.txt')).read()
+changes = open(os.path.join(here, 'CHANGES.txt')).read()
 
 setup(
     name="nosecolor",
-    version="0.0",
+    version="0.1",
     author="Atsushi Odagiri",
     author_email="aodagx@gmail.com",
     description="nose plugin to display colored results.",
     keywords='nose test',
     url="https://github.com/aodag/nosecolor",
-    long_description=readme,
+    long_description=readme + "\n" + changes,
     license="MIT",
     install_requires=[
         "termcolor",
