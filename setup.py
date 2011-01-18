@@ -10,7 +10,10 @@ setup(
     version="0.0",
     author="Atsushi Odagiri",
     author_email="aodagx@gmail.com",
+    description="nose plugin to display colored results.",
+    url="https://github.com/aodag/nosecolor",
     long_description=readme,
+    license="MIT",
     install_requires=[
         "termcolor",
         "nose",
