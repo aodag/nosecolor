@@ -11,6 +11,7 @@ setup(
     author="Atsushi Odagiri",
     author_email="aodagx@gmail.com",
     description="nose plugin to display colored results.",
+    keywords='nose test',
     url="https://github.com/aodag/nosecolor",
     long_description=readme,
     license="MIT",
@@ -25,4 +26,14 @@ setup(
             "nosecolor=nosecolor:NoseColorPlugin",
         ],
     },
+    classifiers=[
+        "Development Status :: 3 - Alpha",
+        "License :: OSI Approved :: MIT License",
+        "Environment :: Console",
+        "Operating System :: POSIX",
+        "Topic :: Software Development :: Testing",
+        "Intended Audience :: Developers",
+        "Programming Language :: Python",
+        "Topic :: Software Development :: Testing",
+    ],
 )
