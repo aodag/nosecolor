@@ -8,7 +8,7 @@ changes = open(os.path.join(here, 'CHANGES.txt')).read()
 
 setup(
     name="nosecolor",
-    version="0.1",
+    version="0.0",
     author="Atsushi Odagiri",
     author_email="aodagx@gmail.com",
     description="nose plugin to display colored results.",
