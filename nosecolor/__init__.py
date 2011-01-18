@@ -54,11 +54,13 @@ class NoseColorPlugin(Plugin):
         self.stream.writeln(colored(test, "green"))
 
     def addError(self, test, error):
+        self.stream.write('[' + colored('ERROR', 'red') + '] ')
         self.stream.writeln(colored(test, "red"))
         self.stream.writeln("".join(traceback.format_exception(*error)))
         self.stream.writeln("=" * 80)
         
     def addFailure(self, test, error):
+        self.stream.write('[' + colored('FAILURE', 'red') + '] ')
         self.stream.writeln(colored(test, "red"))
         if self.verbosity:
             self.stream.writeln("".join(traceback.format_exception(*error)))
